@@ -1,0 +1,12 @@
+{
+  "name": "ProvideDirectory",
+  "displayName": "ProvideDirectory",
+  "expo": {
+    "name": "ProvideDirectory",
+    "slug": "ProvideDirectory",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
