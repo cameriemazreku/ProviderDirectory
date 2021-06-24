@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, Image } from 'react-native';
+import Home from './Screens/Home';
+import Select from './Screens/Select';
+import Results from './Screens/Results';
+// import HomeStack from './routes/homeStack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function App() {
+  const Stack = createStackNavigator();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+  
+    <SafeAreaView style={styles.container} >
+   <Image source ={require('./assets/VillageCareMAX.jpg')} />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Home" component={Home}/>
+          <Stack.Screen name="Select" component={Select} />  
+          <Stack.Screen name="Results" component={Results}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  
+    <Text style={styles.Text}>Provider Directory app</Text>
+    </SafeAreaView>
+    
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+container:{
+  flex:1,
+  backgroundColor: 'white',
+},
+Text:{
+  fontSize: 17,
+  alignSelf: 'center',
+  backgroundColor: 'white'
+}
 });
