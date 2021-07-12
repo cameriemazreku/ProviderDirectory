@@ -1,91 +1,96 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Button,TouchableOpacity} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import Select from './Select';
+import { View, Text, StyleSheet, SafeAreaView, Button, TouchableOpacity } from 'react-native';
+
+const Home = ({ navigation }) => {
+
+  return (
 
 
-const Home = ({navigation}) => 
-{
+    <SafeAreaView style={styles.Home}>
+      
 
 
-return (
 
+      <View styles={styles.Plan}>
+        <Text style={styles.SelectPlan}>Select the type of care you’re looking for</Text>
+      </View>
 
-  <SafeAreaView style={styles.Home}>
-     
-    <View styles={styles.Plan}>
-      <Text style={styles.SelectPlan}>Select the type of care you’re looking for</Text>
-    </View>
+      <TouchableOpacity style={styles.Option1} onPress={() => navigation.navigate('Results')}>
 
-      <TouchableOpacity
-      style={styles.Option1} onPress={()=>navigation.navigate('Select')
-    }>
-              <Text style={styles.Text}>MLTC</Text>
+        <Text style={styles.Text}>MLTC</Text>
+
       </TouchableOpacity>
-    
 
-  <TouchableOpacity style={styles.Option2} onPress={()=>navigation.navigate('Select')}>
-<Text style={styles.Text}>Medicare Health Advantage</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.Option3} onPress={()=>navigation.navigate('Select')}>
-      <Text style={styles.Text}>
-        Medicare Total Advantage
-      </Text>
-</TouchableOpacity>
+
+      <TouchableOpacity style={styles.Option2} onPress={() => navigation.navigate('Select')}>
+
+        <Text style={styles.Text}>Medicare Health Advantage</Text>
+
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.Option3} onPress={() => navigation.navigate('Select')}>
+
+        <Text style={styles.Text}>
+          Medicare Total Advantage
+        </Text>
+
+      </TouchableOpacity>
+
     </SafeAreaView>
-)
 
+  )
 };
+
 const styles = StyleSheet.create({
 
-    Home:{
-      flex:1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-    },
-    Plan:{
-      width: '97%',
-      height: '15%',
-      justifyContent: 'center'
-    },
-    SelectPlan: {
-      margin: 10,
-      color: '#000033',
-      fontSize: 25,
-      fontFamily: 'Roboto',
-      textAlign:'center'
+  Home: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  Plan: {
+    width: '97%',
+    height: '15%',
+    justifyContent: 'center'
+  },
+  SelectPlan: {
+    margin: 10,
+    color: '#000033',
+    fontSize: 25,
+    fontFamily: 'Roboto',
+    textAlign: 'center'
 
-    },
-    Option1:{
-      margin: 10,
-      borderRadius: 15,
-      backgroundColor: '#000033',
-      width: '97%',
-      height: '23%',
-      justifyContent: 'center',
-    },
-    Option2:{
-      margin: 10,
-      borderRadius: 15,
-      backgroundColor: '#008ae6',
-      width: '97%',
-      height: '23%',
-      justifyContent: 'center',
-    },
-    Option3:{
-      margin: 10,
-      borderRadius: 15,
-      backgroundColor: '#ff9900',
-      width: '97%',
-      height: '23%',
-      justifyContent: 'center',
-    },
-    Text: {
-      fontSize: 35,
-      textAlign: 'center',
-      fontFamily: 'Roboto',
-      color: 'white'
-    }
-    
+  },
+  Option1: {
+    margin: 10,
+    borderRadius: 15,
+    backgroundColor: '#000033',
+    width: '97%',
+    height: '23%',
+    justifyContent: 'center',
+  },
+  Option2: {
+    margin: 10,
+    borderRadius: 15,
+    backgroundColor: '#008ae6',
+    width: '97%',
+    height: '23%',
+    justifyContent: 'center',
+  },
+  Option3: {
+    margin: 10,
+    borderRadius: 15,
+    backgroundColor: '#ff9900',
+    width: '97%',
+    height: '23%',
+    justifyContent: 'center',
+  },
+  Text: {
+    fontSize: 35,
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+    color: 'white'
+  }
+
 });
 export default Home;
