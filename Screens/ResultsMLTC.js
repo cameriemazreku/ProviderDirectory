@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, FlatList, SectionList} from 'react-native';
-const Results = ({route,navigation}) => 
+// import data1 from '../util/data1';
+import apiCall from '../assets/apiCall';
+import organization from './SelectMAP';
+const ResultsMLTC = ({route}) => 
 {
-  const {itemSelected, visa, practitonerName, plan} = route.params;
-  console.log("qeky eshte plani",plan)
+  const {itemSelected, visa, practitonerName,plan} = route.params;
+    console.log("qeky eshte plani",plan)
+
 
   console.log("qekjo eshte itemSelected: ",String(itemSelected))
   console.log("qekjo eshte practitonerName: ",String(practitonerName))
@@ -62,7 +66,7 @@ useEffect(()=>{
     method: "GET"})
     .then((json) => json.json()) 
     .then((json)=>{
-      console.log(json)
+      // console.log(json)
 
       for(let i=0;i<json.entry.length;i++){
       if(json.entry[i].resource.practitioner){
@@ -174,4 +178,4 @@ const styles = StyleSheet.create({
     //     padding: 5,
     //   }
 });
-export default Results;
+export default ResultsMLTC;

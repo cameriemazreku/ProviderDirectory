@@ -1,13 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import { View, FlatList, Text, TextInput, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
+// import ResultsByProviderName from './ResultsByProviderName';
+import apiCall from '../assets/apiCall';
+// import data2 from '../util/data1';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// https://www.npmjs.com/package/react-native-search-filter
 
-const Select = ({ route,navigation }) => {
+const SelectMAP = ({ navigation }) => {
   const [search, setsearch] = useState('');
-  const [searchForPractitioner, setsearchForPractitioner] = useState('');
-  const { plan} = route.params;
-  console.log("qeky eshte plani",plan)
-//   var network=plan;
+  const [searchbylocation, setsearchbylocation] = useState('');
+
+  const ResultsByProviderName = (practitionerN) => {
+    fetch('https://fhir.villagecare.org/PractitionerRole?_include=PractitionerRole:organization,PractitionerRole:practitioner,PractitionerRole:network,PractitionerRole:location,PractitionerRole:healthcareService&practitionerActive=true&practitionerName=' + practitionerN + '&practitionerNetwork=MAP', {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "GET"
+    })
+      .then((json) => json.json())
+      .then((json) => {
+        for (let i = 0; i < json.entry.length; i++) {
+          if (json.entry[i].resource.practitioner.resource.name) {
+            console.log(json.entry[i].resource.practitioner.resource.name[0].given)
+          }
+          // setData(json.entry[i].resource.practitioner.resource.name[0].given)}
+          else { console.log("Its empty") }
+        }
+      })
+      .catch((error) => { console.log("---------------------------> error", error.message); })
+
+  }
+
+
+
+
+
   return (
     <SafeAreaView style={styles.Select}>
 
@@ -48,33 +76,30 @@ const Select = ({ route,navigation }) => {
         dropdownStyle={styles.Dropdown}
         dropdownTextStyle={styles.Textstyle}
         animated={true}
-        onSelect={(idx, value) => navigation.navigate('Results', {
+        onSelect={(idx, value) => navigation.navigate('ResultsMLTC', {
           itemSelected: value,
-          visa: idx,
-          plan
+          visa: idx
         })}
-
-      // keyboardShouldPersistTaps='handled'
       />
 
       <TextInput
         style={styles.Option2}
-        value={search}
+        value={text}
         placeholder="Search by provider's name"
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
-        onChangeText={(search) => setsearch(search)}
-        onEndEditing={() => navigation.navigate('Results', { providerName: search, plan})}
+        onChangeText={(text) => ResultsByProviderName(text)}
+
       />
 
       <TextInput
         style={styles.Option3}
-        value={searchForPractitioner}
+        value={searchbylocation}
         placeholder="Search by practitioner name"
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
-        onChangeText={(text) => setsearchForPractitioner(text)}
-        onSubmitEditing={() => navigation.navigate('ResultsMLTC', { practitionerName: searchForPractitioner, plan })}
+        onChangeText={(text) => setsearchbylocation(text)}
+        onSubmitEditing={() => navigation.navigate('ResultsByProviderName', { searchbylocation })}
       />
     </SafeAreaView>
   )
@@ -158,4 +183,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Select;
+export default SelectMAP;

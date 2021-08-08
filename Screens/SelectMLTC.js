@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import { View, FlatList, Text, TextInput, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { TabRouter } from 'react-navigation';
+// import ResultsByProviderName from './ResultsByProviderName';
+import apiCall from '../assets/apiCall';
+// import data2 from '../util/data1';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// https://www.npmjs.com/package/react-native-search-filter
 
-const Select = ({ route,navigation }) => {
+const SelectMLTC = ({ navigation }) => {
   const [search, setsearch] = useState('');
   const [searchForPractitioner, setsearchForPractitioner] = useState('');
-  const { plan} = route.params;
-  console.log("qeky eshte plani",plan)
-//   var network=plan;
+  // console.log(data1.practitioner);
   return (
     <SafeAreaView style={styles.Select}>
 
@@ -50,8 +54,7 @@ const Select = ({ route,navigation }) => {
         animated={true}
         onSelect={(idx, value) => navigation.navigate('Results', {
           itemSelected: value,
-          visa: idx,
-          plan
+          visa: idx
         })}
 
       // keyboardShouldPersistTaps='handled'
@@ -64,7 +67,7 @@ const Select = ({ route,navigation }) => {
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
         onChangeText={(search) => setsearch(search)}
-        onEndEditing={() => navigation.navigate('Results', { providerName: search, plan})}
+        onEndEditing={() => navigation.navigate('Results', { providerName: search })}
       />
 
       <TextInput
@@ -74,7 +77,7 @@ const Select = ({ route,navigation }) => {
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
         onChangeText={(text) => setsearchForPractitioner(text)}
-        onSubmitEditing={() => navigation.navigate('ResultsMLTC', { practitionerName: searchForPractitioner, plan })}
+        onSubmitEditing={() => navigation.navigate('ResultsMLTC', { practitionerName: searchForPractitioner })}
       />
     </SafeAreaView>
   )
@@ -158,4 +161,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Select;
+export default SelectMLTC;

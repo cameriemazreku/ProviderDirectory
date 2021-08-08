@@ -15,20 +15,22 @@ const Home = ({ navigation }) => {
         <Text style={styles.SelectPlan}>Select the type of care you’re looking for</Text>
       </View>
 
-      <TouchableOpacity style={styles.Option1} onPress={() => navigation.navigate('Results')}>
-
+      {/* <TouchableOpacity style={styles.Option1} onPress={() => navigation.navigate('SelectMLTC')}> */}
+      <TouchableOpacity style={styles.Option1} onPress={() => navigation.navigate('Select', {plan: 'MLTC'})}>
         <Text style={styles.Text}>MLTC</Text>
 
       </TouchableOpacity>
 
+      {/* <TouchableOpacity style={styles.Option2} onPress={() => navigation.navigate('SelectMAP')}> */}
 
-      <TouchableOpacity style={styles.Option2} onPress={() => navigation.navigate('Select')}>
+      <TouchableOpacity style={styles.Option2} onPress={() => navigation.navigate('Select',{plan: 'MLTC'} )}>
 
         <Text style={styles.Text}>Medicare Health Advantage</Text>
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.Option3} onPress={() => navigation.navigate('Select')}>
+      {/* <TouchableOpacity style={styles.Option3} onPress={() => navigation.navigate('SelectTotal')}> */}
+      <TouchableOpacity style={styles.Option3} onPress={() => navigation.navigate('Select', {plan: 'DSNP'})}>
 
         <Text style={styles.Text}>
           Medicare Total Advantage

@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList, } from 'react-native';
 import apiCall from '../assets/apiCall';
-const ResultsByProviderName = (ProviderName) => {
+const ResultsByProviderName = ({route}) => {
   const [data, setData] = useState([]);
-
-
-  const endpoint = '/PractitionerRole?_include=PractitionerRole:organization&_include=PractitionerRole:practitioner&_include=PractitionerRole:network&_include=PractitionerRole:location&_include=PractitionerRole:healthcareService&practitionerActive=true&practitionerName=' + ProviderName;
+  const {searchbyLocation}= route.params
+ console.log("cka po kthen: ",searchbyLocation)
+  
+useEffect(()=>{
+  PN();
+  return ()=>{
+    setData();
+  }
+},[])
+  const PN = () => {  
+  const endpoint = '/PractitionerRole?_include=PractitionerRole:organization&_include=PractitionerRole:practitioner&_include=PractitionerRole:network&_include=PractitionerRole:location&_include=PractitionerRole:healthcareService&practitionerActive=true&practitionerName=sumir';
   console.log(endpoint);
   const promise = apiCall(endpoint, 'get')
 
   promise.then(blob => blob.json()).then(json => {
-    console.log(json)
-      // .then(setData(json))
-      
+    // console.log(json.entry[0].resource.practitioner.resource.name[0].given)
+    // setData(String(json.entry[0].resource.practitioner.resource.name[0].given));
   });
-
-  // useEffect(()=>{
-  //   fetch('https://vc202011.aidbox.app/PractitionerRole?_include=PractitionerRole:organization&_include=PractitionerRole:practitioner&_include=PractitionerRole:network&_include=PractitionerRole:location&_include=PractitionerRole:healthcareService&practitionerActive=true&practitionerName='+ProviderName, {
-  //     method: 'GET'
-  //   })
-  //   .then((response)=>response.json())
-  //   .then((json)=>setData(json.name))
-  //   .then((json)=>console.log(json))
-  //   .catch((error)=>console.error(error));
-  // },[]);
-
-  // const ItemSeparatorView = () => {
-  //   return (
-  //     <View
-  //       style={{ height: 0.5, width: '100%' }} />
-  //   )
-  // }
+     
+  }
+  
+  const ItemSeparatorView = () => {
+    return (
+      <View
+        style={{ height: 0.5, width: '100%' }} />
+    )
+  }
 
   return (
     <SafeAreaView style={styles.Result}>
@@ -43,7 +42,7 @@ const ResultsByProviderName = (ProviderName) => {
           ItemSeparatorComponent={ItemSeparatorView}
           renderItem={({ item }) => (
             <Text style={styles.itemStyle}>
-              {item.name}
+              {item}
             </Text>)} />
 
       </View>
