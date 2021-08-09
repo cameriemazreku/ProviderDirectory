@@ -42,7 +42,7 @@ const Select = ({ route,navigation }) => {
         'URGENGT CARE CENTERS',
         'VISION CARE PROVIDER']}
         style={styles.Option1}
-        defaultValue='Select by specialty'
+        defaultValue='Select by specialty ↓'
         textStyle={styles.Text}
         dropdownStyle={styles.Dropdown}
         dropdownTextStyle={styles.Textstyle}
@@ -73,7 +73,7 @@ const Select = ({ route,navigation }) => {
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
         onChangeText={(search) => {setsearchForPractitioner(search)}}
-        onSubmitEditing={() => navigation.navigate('Results', {  searchForPractitioner, plan })}
+        onSubmitEditing={() => navigation.navigate('ResultsPractitioner', {  searchForPractitioner, plan })}
       />
     </SafeAreaView>
   )
@@ -100,17 +100,19 @@ const styles = StyleSheet.create({
   },
   Option1: {
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: '#000033',
     width: '97%',
-    height: '25%',
+    height: '30%',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor:'white',
+    borderWidth:2,
   },
   Option2: {
     margin: 10,
-    borderRadius: 5,
-    backgroundColor: '#008ae6',
+    borderRadius: 15,
+    backgroundColor: '#4682b4',
     width: '97%',
     height: '25%',
     justifyContent: 'center',
@@ -123,33 +125,36 @@ const styles = StyleSheet.create({
   },
   Option3: {
     margin: 10,
-    borderRadius: 5,
-    backgroundColor: '#ff9900',
+    borderRadius: 15,
+    borderColor: '#4682b4',
+    backgroundColor:'#008ae6',
+    borderWidth:2,
     width: '97%',
     height: '25%',
     justifyContent: 'center',
     fontSize: 30,
     textAlign: 'center',
     fontFamily: 'Roboto',
-    color: 'white'
+    color: 'white',
   },
   Text: {
-    fontSize: 30,
+    fontSize: 35,
     textAlign: 'center',
     fontFamily: 'Roboto',
     color: 'white',
+    // color:'#000033'
   },
   Textstyle: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: 'Roboto',
     color: 'black',
-  },
+      },
   Dropdown: {
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#000033',
+    borderColor: '#4682b4',
     borderRadius: 5,
-    height: '50%',
+    height: '51%',
     width: '77%',
 
   }

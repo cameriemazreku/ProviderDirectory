@@ -4,9 +4,9 @@ import Home from './Screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Select from './Screens/Select';
-import Results from './Screens/Results';
 import ResultsOrganization from './Screens/ResultsOrganization';
 import ResultsSpecialty from './Screens/ResultsSpecialty';
+import ResultsPractitioner from './Screens/ResultsPractitioner';
 
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
           <Stack.Screen name="ResultsSpecialty" component={ResultsSpecialty} />
           <Stack.Screen name="ResultsOrganization" component={ResultsOrganization} />
           <Stack.Screen name="Select" component={Select} />
-          <Stack.Screen name="Results" component={Results} />
+          <Stack.Screen name="ResultsPractitioner" component={ResultsPractitioner} />
         </Stack.Navigator>
       </NavigationContainer>
 

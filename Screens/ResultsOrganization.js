@@ -122,7 +122,11 @@ const ResultsOrganization = ({ route }) => {
                     data={nameData}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
-                    renderItem={ItemView} />
+                    renderItem={ItemView} 
+                    ListHeaderComponent={() => (nameData == null ?
+                        <Text style={styles.emptyList}>The list is empty</Text>
+
+                        : null)}/>
             </View>
         </SafeAreaView>
     )
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     },
     itemName: {
         flex: 1,
-        backgroundColor: '#f0ffff',
+        backgroundColor: '#e6f9ff',
         color: 'black',
         width: '99%',
         alignSelf: 'center',
@@ -184,6 +188,16 @@ const styles = StyleSheet.create({
         margin: 2,
         padding: 3,
     },
-
+    emptyList: {
+        backgroundColor: 'white',
+        color: '#2f4f4f',
+        width: '95%',
+        alignSelf: 'center',
+        fontSize: 30,
+        borderBottomColor: 'black',
+        margin: 2,
+        textAlign: 'center',
+        marginTop: '50%',
+    }
 });
 export default ResultsOrganization;

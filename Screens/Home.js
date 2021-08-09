@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
   Option1: {
     margin: 10,
     borderRadius: 15,
-    backgroundColor: '#000033',
+    // backgroundColor: '#000033',
+    backgroundColor: '#008ae6',
+
     width: '97%',
     height: '23%',
     justifyContent: 'center',
@@ -71,7 +73,9 @@ const styles = StyleSheet.create({
   Option2: {
     margin: 10,
     borderRadius: 15,
-    backgroundColor: '#008ae6',
+    // backgroundColor: '#008ae6',
+    backgroundColor: '#4682b4',
+
     width: '97%',
     height: '23%',
     justifyContent: 'center',
@@ -79,7 +83,9 @@ const styles = StyleSheet.create({
   Option3: {
     margin: 10,
     borderRadius: 15,
-    backgroundColor: '#ff9900',
+    // backgroundColor: '#4682b4',
+    backgroundColor: '#000033',
+
     width: '97%',
     height: '23%',
     justifyContent: 'center',

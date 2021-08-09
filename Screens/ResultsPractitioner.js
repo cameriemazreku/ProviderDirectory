@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList, SectionList } from 'react-native';
-const Results = ({ route }) => {
+const ResultsPractitioner = ({ route }) => {
     const { searchForPractitioner, plan } = route.params;
     //   console.log("qeky eshte plani",plan)
     //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
@@ -49,35 +49,25 @@ const Results = ({ route }) => {
         })
             .then((json) => json.json())
             .then((json) => {
-                console.log(json.entry.length,"length")
-                if(json.entry.length==0){
-                    console.log("that")
-                    // practionerD.push(  "its empty" )
-                        
-                    // setData(practitionerD)
-                    console.log(practitionerD.length,'gjatsia')
-                }
-                else{
-                for (let i = 0; i < json.entry.length; i++) {
-                   console.log(json.entry.length,"length")
-                    if (json.entry[i].resource.practitioner) {
-                        
 
-    
+                for (let i = 0; i < json.entry.length; i++) {
+                    if (json.entry[i].resource.practitioner) {
+
                         Location(json.entry[i].resource.location[0].id, (info) => {
                             practitionerD.push({
                                 name: json.entry[i].resource.practitioner.resource.name[0].given[0], name2: json.entry[i].resource.practitioner.resource.name[0].given[1], lastName: json.entry[i].resource.practitioner.resource.name[0].family, specialtyP: json.entry[i].resource.practitioner.resource.qualification[0].code.coding[0].display, state: info.state, postalCode: info.postalCode, line: info.line, organization: json.entry[i].resource.organization.resource.name,
                                 tel: info.tel, city: info.city
                             })
                             setData(practitionerD)
-                        })}
+                        })
+                    }
 
-                    
+
                     else {
-                       
+
                         console.log("")
                     }
-                }}
+                }
 
 
 
@@ -88,19 +78,10 @@ const Results = ({ route }) => {
 
 
     const ItemView = ({ item }) => {
-        if(practitionerD.length==0){
-            return(
-                <View>
-                <Text style={styles.itemName}>
-                    {/* {item.name} */}
-                    {'Search for a different name'}
-                </Text></View>
-            )
-        }
-        else{
+
         return (
             <View >
-                
+
                 <Text style={styles.itemName}>
                     {item.lastName}{', '}{item.name}{' '}
                     {item.name2}
@@ -121,7 +102,7 @@ const Results = ({ route }) => {
                     {'+1'}{item.tel}
                 </Text>
             </View>
-        )}
+        )
     }
 
     const ItemSeparatorView = () => {
@@ -129,12 +110,11 @@ const Results = ({ route }) => {
             <View
                 style={{
                     height: 1, width: '100%', borderBottomColor: '#dcdcdc',
-                    borderBottomWidth: 5, 
+                    borderBottomWidth: 5,
                 }} />
         )
     }
 
-    // console.log(nameData, 'nameData')
 
     return (
         <SafeAreaView style={styles.Select}>
@@ -145,7 +125,12 @@ const Results = ({ route }) => {
                     data={nameData}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
-                    renderItem={ItemView} />
+                    renderItem={ItemView}
+                    ListHeaderComponent={() => (nameData == null ?
+                        <Text style={styles.emptyList}>The list is empty</Text>
+
+                        : null)
+                    } />
             </View>
         </SafeAreaView>
     )
@@ -154,7 +139,7 @@ const Results = ({ route }) => {
 const styles = StyleSheet.create({
 
     Select: {
-        
+
         backgroundColor: 'white',
         alignItems: 'center',
         flex: 1,
@@ -174,7 +159,7 @@ const styles = StyleSheet.create({
     },
     itemName: {
         flex: 1,
-        backgroundColor: '#f0ffff',
+        backgroundColor: '#e6f9ff',
         color: 'black',
         width: '99%',
         alignSelf: 'center',
@@ -183,7 +168,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignSelf: 'center',
         margin: 2,
-        padding:10
+        padding: 10
 
 
     },
@@ -208,7 +193,18 @@ const styles = StyleSheet.create({
         margin: 2,
         padding: 3,
     },
+    emptyList: {
+        backgroundColor: 'white',
+        color: '#2f4f4f',
+        width: '95%',
+        alignSelf: 'center',
+        fontSize: 30,
+        borderBottomColor: 'black',
+        margin: 2,
+        textAlign: 'center',
+        marginTop: '50%',
+    }
 
 
 });
-export default Results;
+export default ResultsPractitioner;
