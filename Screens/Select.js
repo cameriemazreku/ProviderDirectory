@@ -7,7 +7,6 @@ const Select = ({ route,navigation }) => {
   const [searchForPractitioner, setsearchForPractitioner] = useState('');
   const { plan} = route.params;
   console.log("qeky eshte plani",plan)
-//   var network=plan;
   return (
     <SafeAreaView style={styles.Select}>
 
@@ -48,7 +47,7 @@ const Select = ({ route,navigation }) => {
         dropdownStyle={styles.Dropdown}
         dropdownTextStyle={styles.Textstyle}
         animated={true}
-        onSelect={(idx, value) => navigation.navigate('Results', {
+        onSelect={(idx, value) => navigation.navigate('ResultsSpecialty', {
           itemSelected: value,
           visa: idx,
           plan
@@ -63,8 +62,8 @@ const Select = ({ route,navigation }) => {
         placeholder="Search by provider's name"
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
-        onChangeText={(search) => setsearch(search)}
-        onEndEditing={() => navigation.navigate('Results', { providerName: search, plan})}
+        onChangeText={(search)=>{setsearch(search)}}
+        onSubmitEditing={() => navigation.navigate('ResultsOrganization', { search, plan})}
       />
 
       <TextInput
@@ -73,8 +72,8 @@ const Select = ({ route,navigation }) => {
         placeholder="Search by practitioner name"
         placeholderTextColor='white'
         underlineColorAndroid="transparent"
-        onChangeText={(text) => setsearchForPractitioner(text)}
-        onSubmitEditing={() => navigation.navigate('ResultsMLTC', { practitionerName: searchForPractitioner, plan })}
+        onChangeText={(search) => {setsearchForPractitioner(search)}}
+        onSubmitEditing={() => navigation.navigate('Results', {  searchForPractitioner, plan })}
       />
     </SafeAreaView>
   )

@@ -52,7 +52,7 @@ const SelectMLTC = ({ navigation }) => {
         dropdownStyle={styles.Dropdown}
         dropdownTextStyle={styles.Textstyle}
         animated={true}
-        onSelect={(idx, value) => navigation.navigate('Results', {
+        onSelect={(idx, value) => navigation.navigate('ResultsSpecialty', {
           itemSelected: value,
           visa: idx
         })}

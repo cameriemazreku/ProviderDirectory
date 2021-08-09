@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList, SectionList } from 'react-native';
-const Results = ({ route }) => {
-    const { searchForPractitioner, plan } = route.params;
+const ResultsSpecialty = ({ route }) => {
+    const { itemSelected, searchForPractitioner, search, plan } = route.params;
     //   console.log("qeky eshte plani",plan)
     //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
     //   console.log("qekjo eshte practitonerName: ",String(searchForPractitioner))
@@ -38,17 +38,19 @@ const Results = ({ route }) => {
         })
 
         myPromise.then(() => {
+            //    console.log(`FFF`, locationInfo);
             callback(locationInfo)
         })
 
     }
 
-    var practionerD = []
+    var providerD = []
     var dataEmpty = []
 
-
     const fetchData = () => {
-        fetch('https://fhir.villagecare.org/PractitionerRole?_include=PractitionerRole:organization,PractitionerRole:practitioner,PractitionerRole:network,PractitionerRole:location,PractitionerRole:healthcareService&practitionerActive=true&practitionerName=' + searchForPractitioner + '&practitionerSpecialty=&practitionerNetwork=' + plan, {
+
+        fetch('https://fhir.villagecare.org/OrganizationAffiliation?_include=OrganizationAffiliation:organization,OrganizationAffiliation:network,OrganizationAffiliation:location,OrganizationAffiliation:service&organizationActive=true&organizationName=&organizationNetwork=' + plan + '&organizationSpecialty=' + itemSelected, {
+
             headers: {
                 "Content-Type": "application/json"
             },
@@ -57,20 +59,16 @@ const Results = ({ route }) => {
             .then((json) => json.json())
             .then((json) => {
                 for (let i = 0; i < json.entry.length; i++) {
-                    if (json.entry[i].resource.practitioner) {
-                        console.log("bla", json.entry[i].resource.practitioner.resource.name[0].given[1])
+                    if (json.entry[i].resource.organization) {
                         Location(json.entry[i].resource.location[0].id, (info) => {
-                            practionerD.push({
-                                name: json.entry[i].resource.practitioner.resource.name[0].given[0], name2: json.entry[i].resource.practitioner.resource.name[0].given[1], lastName: json.entry[i].resource.practitioner.resource.name[0].family, specialtyP: json.entry[i].resource.practitioner.resource.qualification[0].code.coding[0].display, state: info.state, postalCode: info.postalCode, line: info.line, organization: json.entry[i].resource.organization.resource.name,
-                                tel: info.tel, city: info.city
-                            })
-                            setData(practionerD)
+                            providerD.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: json.entry[i].resource.organization.resource.type[0].coding[0].code.display, location: info, tel: info.tel })
+                            setData(providerD)
                         })
 
                     }
                     else {
-                        dataEmpty.push({ name: "its empty" })
-                        setData(dataEmpty)
+                        // dataEmpty.push({name:"its empty"})
+                        // setData(dataEmpty)
                         console.log(" ")
                     }
                 }
@@ -87,19 +85,18 @@ const Results = ({ route }) => {
         return (
             <View >
                 <Text style={styles.itemName}>
-                    {item.lastName}{', '}{item.name}{' '}
-                    {item.name2}
+                    {item.name}
                 </Text>
                 <Text style={styles.itemStyle}>
                     {item.organization}</Text>
                 <Text style={styles.LocationStyle}>
-                    {item.line}</Text>
+                    {item.location.line}</Text>
                 <Text style={styles.LocationStyle}>
 
 
-                    {item.city}{' ,'}
-                    {item.state}{' '}
-                    {item.postalCode}
+                    {item.location.city}{' ,'}
+                    {item.location.state}{' '}
+                    {item.location.postalCode}
 
                 </Text>
                 <Text style={styles.itemStyle}>
@@ -152,8 +149,8 @@ const styles = StyleSheet.create({
         borderColor: '#f0f8ff',
         borderWidth: 2,
         borderRadius: 5,
-        margin: 5,
-        justifyContent: 'space-between'
+        //   margin:5,
+        //   justifyContent: 'space-between'
         // alignContent: 'space-between',
 
     },
@@ -165,9 +162,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 20,
         borderBottomColor: 'black',
-        justifyContent: 'space-evenly',
+        //   justifyContent:'space-evenly',
         alignSelf: 'center',
-        margin: 3,
+        //   margin: 3,
 
 
     },
@@ -179,7 +176,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 15,
         borderBottomColor: 'black',
-        margin: 3
+        //   margin: 3
 
     },
     itemStyle: {
@@ -195,4 +192,4 @@ const styles = StyleSheet.create({
 
 
 });
-export default Results;
+export default ResultsSpecialty;
