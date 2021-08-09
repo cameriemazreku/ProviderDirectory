@@ -16,34 +16,27 @@ const Results = ({ route }) => {
     const Location = (id, callback) => {
         var locationInfo = {};
 
-        const myPromise = new Promise((resolve, reject) => {
-            fetch('https://fhir.villagecare.org/Location/' + id, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "GET"
-            })
-                .then((json) => json.json())
-                .then((json) => {
-                    locationInfo.line = json.address.line[0]
-                    locationInfo.city = json.address.city
-                    locationInfo.state = json.address.state
-                    locationInfo.postalCode = json.address.postalCode
-                    locationInfo.tel = json.telecom[0].value
-                    resolve();
-
-                }
-
-                );
+        fetch('https://fhir.villagecare.org/Location/' + id, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "GET"
         })
+            .then((json) => json.json())
+            .then((json) => {
+                locationInfo.line = json.address.line[0]
+                locationInfo.city = json.address.city
+                locationInfo.state = json.address.state
+                locationInfo.postalCode = json.address.postalCode
+                locationInfo.tel = json.telecom[0].value
+                callback(locationInfo)
+            }
 
-        myPromise.then(() => {
-            callback(locationInfo)
-        })
+            );
 
     }
 
-    var practionerD = []
+    var practitionerD = []
     var dataEmpty = []
 
 
@@ -56,24 +49,35 @@ const Results = ({ route }) => {
         })
             .then((json) => json.json())
             .then((json) => {
+                console.log(json.entry.length,"length")
+                if(json.entry.length==0){
+                    console.log("that")
+                    // practionerD.push(  "its empty" )
+                        
+                    // setData(practitionerD)
+                    console.log(practitionerD.length,'gjatsia')
+                }
+                else{
                 for (let i = 0; i < json.entry.length; i++) {
+                   console.log(json.entry.length,"length")
                     if (json.entry[i].resource.practitioner) {
-                        console.log("bla", json.entry[i].resource.practitioner.resource.name[0].given[1])
+                        
+
+    
                         Location(json.entry[i].resource.location[0].id, (info) => {
-                            practionerD.push({
+                            practitionerD.push({
                                 name: json.entry[i].resource.practitioner.resource.name[0].given[0], name2: json.entry[i].resource.practitioner.resource.name[0].given[1], lastName: json.entry[i].resource.practitioner.resource.name[0].family, specialtyP: json.entry[i].resource.practitioner.resource.qualification[0].code.coding[0].display, state: info.state, postalCode: info.postalCode, line: info.line, organization: json.entry[i].resource.organization.resource.name,
                                 tel: info.tel, city: info.city
                             })
-                            setData(practionerD)
-                        })
+                            setData(practitionerD)
+                        })}
 
-                    }
+                    
                     else {
-                        dataEmpty.push({ name: "its empty" })
-                        setData(dataEmpty)
-                        console.log(" ")
+                       
+                        console.log("")
                     }
-                }
+                }}
 
 
 
@@ -84,8 +88,19 @@ const Results = ({ route }) => {
 
 
     const ItemView = ({ item }) => {
+        if(practitionerD.length==0){
+            return(
+                <View>
+                <Text style={styles.itemName}>
+                    {/* {item.name} */}
+                    {'Search for a different name'}
+                </Text></View>
+            )
+        }
+        else{
         return (
             <View >
+                
                 <Text style={styles.itemName}>
                     {item.lastName}{', '}{item.name}{' '}
                     {item.name2}
@@ -95,8 +110,6 @@ const Results = ({ route }) => {
                 <Text style={styles.LocationStyle}>
                     {item.line}</Text>
                 <Text style={styles.LocationStyle}>
-
-
                     {item.city}{' ,'}
                     {item.state}{' '}
                     {item.postalCode}
@@ -108,17 +121,20 @@ const Results = ({ route }) => {
                     {'+1'}{item.tel}
                 </Text>
             </View>
-        )
+        )}
     }
 
     const ItemSeparatorView = () => {
         return (
             <View
-                style={{ height: 1, width: '100%' }} />
+                style={{
+                    height: 1, width: '100%', borderBottomColor: '#dcdcdc',
+                    borderBottomWidth: 5, 
+                }} />
         )
     }
 
-    console.log(nameData, 'nameData')
+    // console.log(nameData, 'nameData')
 
     return (
         <SafeAreaView style={styles.Select}>
@@ -138,14 +154,14 @@ const Results = ({ route }) => {
 const styles = StyleSheet.create({
 
     Select: {
-        backgroundColor: '#f5f5f5',
+        
+        backgroundColor: 'white',
         alignItems: 'center',
         flex: 1,
     },
 
     Results: {
         flex: 1,
-        // margin: 5,
         borderRadius: 1,
         backgroundColor: 'white',
         width: '97%',
@@ -154,43 +170,43 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 5,
         justifyContent: 'space-between'
-        // alignContent: 'space-between',
 
     },
     itemName: {
-        // flex:1,
+        flex: 1,
         backgroundColor: '#f0ffff',
         color: 'black',
-        width: '95%',
+        width: '99%',
         alignSelf: 'center',
-        fontSize: 20,
+        fontSize: 25,
         borderBottomColor: 'black',
         justifyContent: 'space-evenly',
         alignSelf: 'center',
-        margin: 3,
+        margin: 2,
+        padding:10
 
 
     },
     LocationStyle: {
         flex: 1,
         backgroundColor: 'white',
-        color: 'black',
+        color: '#2f4f4f',
         width: '95%',
         alignSelf: 'center',
         fontSize: 15,
         borderBottomColor: 'black',
-        margin: 3
-
+        margin: 2,
+        padding: 3,
     },
     itemStyle: {
         backgroundColor: 'white',
-        color: 'black',
+        color: '#2f4f4f',
         width: '95%',
         alignSelf: 'center',
         fontSize: 17,
         borderBottomColor: 'black',
-        // margin: 3
-
+        margin: 2,
+        padding: 3,
     },
 
 

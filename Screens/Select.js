@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 const Select = ({ route,navigation }) => {

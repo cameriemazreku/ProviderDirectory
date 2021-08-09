@@ -60,7 +60,7 @@ const ResultsOrganization = ({ route }) => {
                 for (let i = 0; i < json.entry.length; i++) {
                     if (json.entry[i].resource.organization) {
                         Location(json.entry[i].resource.location[0].id, (info) => {
-                            providerD.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: json.entry[i].resource.organization.resource.type[0].coding[0].code.display, location: info, tel: info.tel })
+                            providerD.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: json.entry[i].resource.organization.resource.type[0].coding[0].display, location: info, tel: info.tel })
                             setData(providerD)
                         })
 
@@ -84,8 +84,7 @@ const ResultsOrganization = ({ route }) => {
                 <Text style={styles.itemName}>
                     {item.name}
                 </Text>
-                <Text style={styles.itemStyle}>
-                    {item.organization}</Text>
+
                 <Text style={styles.LocationStyle}>
                     {item.location.line}</Text>
                 <Text style={styles.LocationStyle}>
@@ -108,11 +107,11 @@ const ResultsOrganization = ({ route }) => {
     const ItemSeparatorView = () => {
         return (
             <View
-                style={{ height: 1, width: '100%' }} />
+                style={{ height: 1, width: '100%', borderBottomColor: '#dcdcdc',
+                borderBottomWidth: 5, }} />
         )
     }
 
-    console.log(nameData, 'nameData')
 
     return (
         <SafeAreaView style={styles.Select}>
@@ -130,63 +129,61 @@ const ResultsOrganization = ({ route }) => {
 
 };
 const styles = StyleSheet.create({
-
     Select: {
-        backgroundColor: '#f5f5f5',
+        
+        backgroundColor: 'white',
         alignItems: 'center',
         flex: 1,
     },
 
     Results: {
         flex: 1,
-        // margin: 5,
         borderRadius: 1,
         backgroundColor: 'white',
         width: '97%',
         borderColor: '#f0f8ff',
         borderWidth: 2,
         borderRadius: 5,
-        //   margin:5,
-        //   justifyContent: 'space-between'
-        // alignContent: 'space-between',
+        margin: 5,
+        justifyContent: 'space-between'
 
     },
     itemName: {
-        // flex:1,
+        flex: 1,
         backgroundColor: '#f0ffff',
         color: 'black',
-        width: '95%',
+        width: '99%',
         alignSelf: 'center',
-        fontSize: 20,
+        fontSize: 25,
         borderBottomColor: 'black',
-        //   justifyContent:'space-evenly',
+        justifyContent: 'space-evenly',
         alignSelf: 'center',
-        //   margin: 3,
+        margin: 2,
+        padding:10
 
 
     },
     LocationStyle: {
         flex: 1,
         backgroundColor: 'white',
-        color: 'black',
+        color: '#2f4f4f',
         width: '95%',
         alignSelf: 'center',
         fontSize: 15,
         borderBottomColor: 'black',
-        //   margin: 3
-
+        margin: 2,
+        padding: 3,
     },
     itemStyle: {
         backgroundColor: 'white',
-        color: 'black',
+        color: '#2f4f4f',
         width: '95%',
         alignSelf: 'center',
         fontSize: 17,
         borderBottomColor: 'black',
-        // margin: 3
-
+        margin: 2,
+        padding: 3,
     },
-
 
 });
 export default ResultsOrganization;
