@@ -16,7 +16,7 @@ export default function App() {
     <SafeAreaView style={styles.container} >
       <Image source={require('./assets/VillageCareMAX.jpg')} />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true }}>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="ResultsSpecialty" component={ResultsSpecialty} />
           <Stack.Screen name="ResultsOrganization" component={ResultsOrganization} />

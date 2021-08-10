@@ -127,10 +127,11 @@ const ResultsOrganization = ({ route }) => {
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
                     renderItem={ItemView}
-                    ListHeaderComponent={() => (nameData == 0 ?
-                        <Text style={styles.emptyList}>The list is empty</Text>
+                    // ListHeaderComponent={() => (nameData == 0 ?
+                        // <Text style={styles.emptyList}>The list is empty</Text>
 
-                        : null)} />
+                        // : null)}
+                         />
             </View>
         </SafeAreaView>
     )
