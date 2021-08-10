@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { useIsFocused } from '@react-navigation/native';
 
 const Select = ({ route,navigation }) => {
   const [search, setsearch] = useState('');
   const [searchForPractitioner, setsearchForPractitioner] = useState('');
+  const [value,setValue]=useState('');
   const { plan} = route.params;
+  const isFocused =useIsFocused();
   console.log("qeky eshte plani",plan)
+  useEffect(()=>{
+    setsearch()
+    setsearchForPractitioner()
+    // ModalDropdown.
+  },[isFocused]
+  );
   return (
     <SafeAreaView style={styles.Select}>
 
@@ -46,14 +55,14 @@ const Select = ({ route,navigation }) => {
         textStyle={styles.Text}
         dropdownStyle={styles.Dropdown}
         dropdownTextStyle={styles.Textstyle}
+        defaultIndex={-1}
+        onChangeText='defaultValue'
         animated={true}
         onSelect={(idx, value) => navigation.navigate('ResultsSpecialty', {
           itemSelected: value,
-          visa: idx,
-          plan
-        })}
-
-      // keyboardShouldPersistTaps='handled'
+          plan,
+        },   
+        )}
       />
 
       <TextInput

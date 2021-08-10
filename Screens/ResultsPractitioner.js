@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList, SectionList } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+
 const ResultsPractitioner = ({ route }) => {
     const { searchForPractitioner, plan } = route.params;
     //   console.log("qeky eshte plani",plan)
     //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
     //   console.log("qekjo eshte practitonerName: ",String(searchForPractitioner))
     const [nameData, setData] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         fetchData();
+        setIsLoading();
         return () => {
             setData();
         }
@@ -37,7 +39,6 @@ const ResultsPractitioner = ({ route }) => {
     }
 
     var practitionerD = []
-    var dataEmpty = []
 
 
     const fetchData = () => {
@@ -59,6 +60,7 @@ const ResultsPractitioner = ({ route }) => {
                                 tel: info.tel, city: info.city
                             })
                             setData(practitionerD)
+                            setIsLoading(false)
                         })
                     }
 
@@ -66,6 +68,8 @@ const ResultsPractitioner = ({ route }) => {
                     else {
 
                         console.log("")
+                        setIsLoading(false)
+
                     }
                 }
 

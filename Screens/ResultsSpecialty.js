@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList, SectionList } from 'react-native';
 const ResultsSpecialty = ({ route }) => {
     const { itemSelected, plan } = route.params;
-    //   console.log("qeky eshte plani",plan)
-    //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
-    //   console.log("qekjo eshte practitonerName: ",String(searchForPractitioner))
     const [nameData, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchData();
+        setIsLoading();
         return () => {
             setData();
         }
@@ -16,7 +15,7 @@ const ResultsSpecialty = ({ route }) => {
     const Location = (id, callback) => {
         var locationInfo = {};
 
-        const myPromise = new Promise((resolve, reject) => {
+
             fetch('https://fhir.villagecare.org/Location/' + id, {
                 headers: {
                     "Content-Type": "application/json"
@@ -30,21 +29,16 @@ const ResultsSpecialty = ({ route }) => {
                     locationInfo.state = json.address.state
                     locationInfo.postalCode = json.address.postalCode
                     locationInfo.tel = json.telecom[0].value
-                    resolve();
+                    callback(locationInfo)
+
 
                 }
 
                 );
-        })
-
-        myPromise.then(() => {
-            callback(locationInfo)
-        })
-
     }
 
-    var providerD = []
-    var dataEmpty = []
+    var specialty = []
+
 
     const fetchData = () => {
 
@@ -60,14 +54,18 @@ const ResultsSpecialty = ({ route }) => {
                 for (let i = 0; i < json.entry.length; i++) {
                     if (json.entry[i].resource.organization) {
                         Location(json.entry[i].resource.location[0].id, (info) => {
-                            providerD.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: itemSelected, tel: info.tel, state: info.state, postalCode: info.postalCode, line: info.line,city:info.city })
-                            setData(providerD)
+                            specialty.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: itemSelected, tel: info.tel, state: info.state, postalCode: info.postalCode, line: info.line, city: info.city })
+                            setData(specialty)
+                            setIsLoading(false)
+
                         })
 
                     }
                     else {
 
                         console.log(" ")
+                        setIsLoading(false)
+
                     }
                 }
 
@@ -107,8 +105,10 @@ const ResultsSpecialty = ({ route }) => {
     const ItemSeparatorView = () => {
         return (
             <View
-                style={{ height: 1, width: '100%', borderBottomColor: '#dcdcdc',
-                borderBottomWidth: 2 }} />
+                style={{
+                    height: 1, width: '100%', borderBottomColor: '#dcdcdc',
+                    borderBottomWidth: 2
+                }} />
         )
     }
 
@@ -123,7 +123,7 @@ const ResultsSpecialty = ({ route }) => {
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
                     renderItem={ItemView}
-                    ListHeaderComponent={() => (nameData == 0 ?
+                    ListHeaderComponent={() => (nameData == null   ?
                         <Text style={styles.emptyList}>The list is empty</Text>
 
                         : null)} />
@@ -135,7 +135,7 @@ const ResultsSpecialty = ({ route }) => {
 const styles = StyleSheet.create({
 
     Select: {
-        
+
         backgroundColor: 'white',
         alignItems: 'center',
         flex: 1,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignSelf: 'center',
         margin: 2,
-        padding:10
+        padding: 10
 
 
     },

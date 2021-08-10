@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList, SectionList } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native'; 
+
 const ResultsOrganization = ({ route }) => {
-    const { itemSelected, searchForPractitioner, search, plan } = route.params;
-    //   console.log("qeky eshte plani",plan)
-    //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
-    //   console.log("qekjo eshte practitonerName: ",String(searchForPractitioner))
+    const { search, plan } = route.params;
     const [nameData, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchData();
+        setIsLoading();
         return () => {
             setData();
         }
@@ -44,7 +44,6 @@ const ResultsOrganization = ({ route }) => {
     }
 
     var providerD = []
-    var dataEmpty = []
 
     const fetchData = () => {
 
@@ -62,11 +61,15 @@ const ResultsOrganization = ({ route }) => {
                         Location(json.entry[i].resource.location[0].id, (info) => {
                             providerD.push({ name: json.entry[i].resource.organization.resource.name, specialtyP: json.entry[i].resource.organization.resource.type[0].coding[0].display, location: info, tel: info.tel })
                             setData(providerD)
+                            setIsLoading(false);
+
                         })
 
                     }
                     else {
                         console.log(" ")
+                        setIsLoading(false);
+
                     }
                 }
 
@@ -107,11 +110,12 @@ const ResultsOrganization = ({ route }) => {
     const ItemSeparatorView = () => {
         return (
             <View
-                style={{ height: 1, width: '100%', borderBottomColor: '#dcdcdc',
-                borderBottomWidth: 5, }} />
+                style={{
+                    height: 1, width: '100%', borderBottomColor: '#dcdcdc',
+                    borderBottomWidth: 5,
+                }} />
         )
     }
-
 
     return (
         <SafeAreaView style={styles.Select}>
@@ -122,11 +126,11 @@ const ResultsOrganization = ({ route }) => {
                     data={nameData}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
-                    renderItem={ItemView} 
-                    ListHeaderComponent={() => (nameData == null ?
+                    renderItem={ItemView}
+                    ListHeaderComponent={() => (nameData == 0 ?
                         <Text style={styles.emptyList}>The list is empty</Text>
 
-                        : null)}/>
+                        : null)} />
             </View>
         </SafeAreaView>
     )
@@ -134,7 +138,7 @@ const ResultsOrganization = ({ route }) => {
 };
 const styles = StyleSheet.create({
     Select: {
-        
+
         backgroundColor: 'white',
         alignItems: 'center',
         flex: 1,
@@ -163,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignSelf: 'center',
         margin: 2,
-        padding:10
+        padding: 10
 
 
     },

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, View, Text, Image } from 'react-native';
 import Home from './Screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import Select from './Screens/Select';
 import ResultsOrganization from './Screens/ResultsOrganization';
 import ResultsSpecialty from './Screens/ResultsSpecialty';
@@ -16,11 +16,13 @@ export default function App() {
     <SafeAreaView style={styles.container} >
       <Image source={require('./assets/VillageCareMAX.jpg')} />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="ResultsSpecialty" component={ResultsSpecialty} />
           <Stack.Screen name="ResultsOrganization" component={ResultsOrganization} />
-          <Stack.Screen name="Select" component={Select} />
+          <Stack.Screen name="Select" component={Select} 
+          
+          />
           <Stack.Screen name="ResultsPractitioner" component={ResultsPractitioner} />
         </Stack.Navigator>
       </NavigationContainer>
@@ -40,5 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     alignSelf: 'center',
     backgroundColor: 'white'
+  },
+  HeaderBackTitleStyle:{
+    fontFamily:'roboto',
+    fontSize:20
   }
 });
