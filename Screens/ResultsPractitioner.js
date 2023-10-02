@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 
 const ResultsPractitioner = ({ route }) => {
     const { searchForPractitioner, plan } = route.params;
-    //   console.log("qeky eshte plani",plan)
-    //   console.log("qekjo eshte itemSelected: ",String(itemSelected))
-    //   console.log("qekjo eshte practitonerName: ",String(searchForPractitioner))
+    //   console.log("plan: ",plan)
+    //   console.log("itemSelected: ",String(itemSelected))
+    //   console.log("practitonerName: ",String(searchForPractitioner))
     const [nameData, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
